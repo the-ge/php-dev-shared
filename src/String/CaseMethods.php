@@ -16,18 +16,35 @@ namespace TheGe\Shared\String;
 
 trait CaseMethods
 {
+    /**
+     * i.e. 'BaseUnitPrice' -> 'base_unit_price'
+     */
+    private function caseCamelToSnake($string): string
+    {
+        return \strtolower(\preg_replace('/(?<!^)[A-Z]/', '_$0', $string));
+    }
+
+    /**
+     * i.e. 'base_unit_price' -> 'BaseUnitPrice'
+     */
     private function caseSnakeToCamel(string $string): string
     {
         return \str_replace('_', '', \ucwords($string, '_'));
     }
 
+    /**
+     * i.e. 'base_unit_price' -> 'baseUnitPrice'
+     */
     private function caseSnakeToDromedary(string $string): string
     {
         return \lcfirst($this->caseSnakeToCamel($string));
     }
 
-    private function caseCamelToSnake($string): string
+    /**
+     * i.e. 'base_unit_price' -> 'Base unit price'
+     */
+    private function caseSnakeToTitle(string $name): string
     {
-        return \strtolower(\preg_replace('/(?<!^)[A-Z]/', '_$0', $string));
+        return \ucfirst(\str_replace('_', ' ', $name));
     }
 }
